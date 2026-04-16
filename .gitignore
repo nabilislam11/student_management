@@ -1,0 +1,28 @@
+# OS-specific files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Common log files and temporary files
+*.log
+*.tmp
+*.bak
+*.swp
+
+# Environment variables (sensitive data)
+.env
+.env.local
+
+# IDE and Editor settings
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Build and dependency directories (general examples)
+dist/
+build/
+out/
+node_modules/
+bin/
+obj/
