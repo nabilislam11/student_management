@@ -1,8 +1,13 @@
 require("dotenv").config();
 const express = require("express");
 
-const authController = require("./controller/authControlle");
 const db_connection = require("./confiq/db_connection");
+const {
+  authController,
+  loginController,
+  logoutController,
+} = require("./controller/authControlle");
+const profileCreateController = require("./controller/profileCreateController");
 
 const app = express();
 
@@ -13,6 +18,9 @@ db_connection();
 
 // Route
 app.post("/registration", authController);
+app.post("/login", loginController);
+app.delete("/logout", logoutController);
+app.post("/profile", profileCreateController);
 
 const port = process.env.PORT || 5000;
 
