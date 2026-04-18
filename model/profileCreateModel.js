@@ -30,5 +30,8 @@ const profileCreateModel = new Schema({
     enum: ["male", "female", "custom"],
     required: true,
   },
+  designation: {
+    type: String,
+  },
 });
 module.exports = mongoose.model("Profile", profileCreateModel);

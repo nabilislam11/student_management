@@ -4,7 +4,8 @@ const profileCreateController = (req, res) => {
     req.body;
   let firstThreeLater = name.slice(0, 3);
   let randomNumber = Date.now().toString().slice(-3);
-  let emid = randomNumber;
+  let emid = firstThreeLater + randomNumber;
+  console.log(emid);
 
   let profile = new Profile({
     email,
@@ -18,4 +19,19 @@ const profileCreateController = (req, res) => {
   profile.save();
   res.status(201).json({ success: true, message: "Profile create" });
 };
-module.exports = profileCreateController;
+const getAllProfile = async (req, res) => {
+  try {
+    const getProfile = await Profile.find({});
+    res.status(200).json({
+      success: true,
+      message: "All Product",
+      getProfile: getProfile,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Server error ",
+    });
+  }
+};
+module.exports = { profileCreateController, getAllProfile };

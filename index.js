@@ -7,7 +7,10 @@ const {
   loginController,
   logoutController,
 } = require("./controller/authControlle");
-const profileCreateController = require("./controller/profileCreateController");
+const {
+  getAllProfile,
+  profileCreateController,
+} = require("./controller/profileCreateController");
 
 const app = express();
 
@@ -21,6 +24,7 @@ app.post("/registration", authController);
 app.post("/login", loginController);
 app.delete("/logout", logoutController);
 app.post("/profile", profileCreateController);
+app.get("/getAllProfile", getAllProfile);
 
 const port = process.env.PORT || 5000;
 
