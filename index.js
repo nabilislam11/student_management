@@ -11,6 +11,8 @@ const {
   getAllProfile,
   profileCreateController,
   getSingleProfile,
+  updateProfile,
+  holdProfile,
 } = require("./controller/profileCreateController");
 
 const app = express();
@@ -24,9 +26,11 @@ db_connection();
 app.post("/registration", authController);
 app.post("/login", loginController);
 app.delete("/logout", logoutController);
-app.post("/profile", profileCreateController);
+app.post("/profileCreate", profileCreateController);
 app.get("/getAllProfile", getAllProfile);
 app.get("/getSingleProfile/:id", getSingleProfile);
+app.post("/updateProfile/:id", updateProfile);
+app.post("/holdProfile", holdProfile);
 const port = process.env.PORT || 5000;
 
 app.listen(port, () => {

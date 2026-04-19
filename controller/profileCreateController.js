@@ -1,4 +1,4 @@
-const Profile = require("../model/profileCreateModel");
+const Profile = require("../model/profileModel");
 const profileCreateController = (req, res) => {
   const { email, name, employId, phoneNumber, bloodGroup, dob, gender } =
     req.body;
@@ -50,4 +50,50 @@ const getSingleProfile = async (req, res) => {
     });
   }
 };
-module.exports = { profileCreateController, getAllProfile, getSingleProfile };
+const updateProfile = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const data = await Profile.findByIdAndUpdate({ _id: id }, req.body, {
+      new: true,
+    });
+    res.status(200).json({
+      success: true,
+      message: `${data.name} Profile`,
+      data: data,
+    });
+  } catch (error) {
+    es.status(500).json({
+      success: false,
+      message: `Server error`,
+    });
+  }
+};
+const holdProfile = async (req, res) => {
+  const { id } = req.body;
+  try {
+    const existinguser = await Profile.findOne({ _id: id });
+    // if (existinguser) {
+    //   existinguser.isHold = true;
+    //   existinguser.save();
+    // }
+    existinguser.isHold = true;
+    existinguser.save();
+    res.status(200).json({
+      success: true,
+      message: `${existinguser.name} HoldProfile`,
+      existinguser: existinguser,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: `Server error`,
+    });
+  }
+};
+module.exports = {
+  profileCreateController,
+  getAllProfile,
+  getSingleProfile,
+  updateProfile,
+  holdProfile,
+};

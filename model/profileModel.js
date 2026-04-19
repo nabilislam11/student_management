@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
-const profileCreateModel = new Schema({
+const profileModel = new Schema({
   employId: {
     type: String,
     required: true,
@@ -33,5 +33,9 @@ const profileCreateModel = new Schema({
   designation: {
     type: String,
   },
+  isHold: {
+    type: Boolean,
+    default: false,
+  },
 });
-module.exports = mongoose.model("Profile", profileCreateModel);
+module.exports = mongoose.model("Profile", profileModel);
