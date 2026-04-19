@@ -34,4 +34,20 @@ const getAllProfile = async (req, res) => {
     });
   }
 };
-module.exports = { profileCreateController, getAllProfile };
+const getSingleProfile = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const data = await Profile.findOne({ _id: id });
+    res.status(200).json({
+      success: true,
+      message: `${data.name} Profile`,
+      data: data,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: `Server Error`,
+    });
+  }
+};
+module.exports = { profileCreateController, getAllProfile, getSingleProfile };

@@ -10,6 +10,7 @@ const {
 const {
   getAllProfile,
   profileCreateController,
+  getSingleProfile,
 } = require("./controller/profileCreateController");
 
 const app = express();
@@ -25,7 +26,7 @@ app.post("/login", loginController);
 app.delete("/logout", logoutController);
 app.post("/profile", profileCreateController);
 app.get("/getAllProfile", getAllProfile);
-
+app.get("/getSingleProfile/:id", getSingleProfile);
 const port = process.env.PORT || 5000;
 
 app.listen(port, () => {
