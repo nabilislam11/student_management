@@ -1,23 +1,30 @@
 const Profile = require("../model/profileModel");
-const profileCreateController = (req, res) => {
+const profileCreateController = async (req, res) => {
   const { email, name, employId, phoneNumber, bloodGroup, dob, gender } =
     req.body;
-  let firstThreeLater = name.slice(0, 3);
-  let randomNumber = Date.now().toString().slice(-3);
-  let emid = firstThreeLater + randomNumber;
-  console.log(emid);
+  try {
+    let firstThreeLater = name.slice(0, 3);
+    let randomNumber = Date.now().toString().slice(-3);
+    let emid = firstThreeLater + randomNumber;
+    console.log(emid);
 
-  let profile = new Profile({
-    email,
-    employId: emid,
-    name,
-    phoneNumber,
-    bloodGroup,
-    gender,
-    dob,
-  });
-  profile.save();
-  res.status(201).json({ success: true, message: "Profile create" });
+    let profile = await new Profile({
+      email,
+      employId: emid,
+      name,
+      phoneNumber,
+      bloodGroup,
+      gender,
+      dob,
+    });
+    profile.save();
+    res.status(201).json({ success: true, message: "Profile create" });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Server error ",
+    });
+  }
 };
 const getAllProfile = async (req, res) => {
   try {
@@ -72,15 +79,28 @@ const holdProfile = async (req, res) => {
   const { id } = req.body;
   try {
     const existinguser = await Profile.findOne({ _id: id });
+    if (!existinguser) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+    if (existinguser.isHold) {
+      return res.status(200).json({
+        success: false,
+        message: `${existinguser.name} already hold`,
+      });
+    }
+    existinguser.isHold = true;
+    await existinguser.save();
     // if (existinguser) {
     //   existinguser.isHold = true;
     //   existinguser.save();
     // }
-    existinguser.isHold = true;
-    existinguser.save();
+
     res.status(200).json({
       success: true,
-      message: `${existinguser.name} HoldProfile`,
+      message: `${existinguser.name} is now hold`,
       existinguser: existinguser,
     });
   } catch (error) {
