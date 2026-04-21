@@ -13,6 +13,7 @@ const {
   getSingleProfile,
   updateProfile,
   holdProfile,
+  getHoldProfile,
 } = require("./controller/profileCreateController");
 
 const app = express();
@@ -31,6 +32,7 @@ app.get("/getAllProfile", getAllProfile);
 app.get("/getSingleProfile/:id", getSingleProfile);
 app.post("/updateProfile/:id", updateProfile);
 app.post("/holdProfile", holdProfile);
+app.post("/getHoldProfile", getHoldProfile);
 const port = process.env.PORT || 5000;
 
 app.listen(port, () => {

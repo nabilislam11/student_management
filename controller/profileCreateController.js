@@ -28,7 +28,7 @@ const profileCreateController = async (req, res) => {
 };
 const getAllProfile = async (req, res) => {
   try {
-    const getProfile = await Profile.find({});
+    const getProfile = await Profile.find({ isHold: { $ne: true } });
     res.status(200).json({
       success: true,
       message: "All Product",
@@ -110,10 +110,26 @@ const holdProfile = async (req, res) => {
     });
   }
 };
+const getHoldProfile = async (req, res) => {
+  try {
+    let data = await Profile.find({ isHold: { $eq: true } });
+    res.status(200).json({
+      success: true,
+      message: `${data.name} holding profile`,
+      data: data,
+    });
+  } catch (error) {
+    res.status(200).json({
+      success: true,
+      message: `Server Error`,
+    });
+  }
+};
 module.exports = {
   profileCreateController,
   getAllProfile,
   getSingleProfile,
   updateProfile,
   holdProfile,
+  getHoldProfile,
 };
